@@ -1,0 +1,11 @@
+<h3>Liste des articles</h3>
+<div class="well">
+<ul>
+{% for article in articles %}
+	<li>{{ article.id }} - {{ article.titre }} - <a href="{{ path("article_edit", {'id':article.id}) }}">Editer</a> - <a href="{{ path("article_delete", {'id':article.id}) }}">Supprimer</a></li>
+{% else %}
+	<li>Pas d'article trouvé</li>
+{% endfor %}
+</ul>
+<a href="{{ path("article_add") }}">Ajouter un article</a>
+</div>
