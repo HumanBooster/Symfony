@@ -41,6 +41,14 @@ class Auteur
      * @ORM\Column(name="pseudo", type="string", length=255)
      */
     private $pseudo;
+    
+    /**
+     * 
+     * @var Collection
+     * 
+     * @ORM\OneToMany(targetEntity="Article", mappedBy="auteur")
+     */
+    private $articles;
 
 
     /**
@@ -120,5 +128,46 @@ class Auteur
     public function getPseudo()
     {
         return $this->pseudo;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add articles
+     *
+     * @param Article $article
+     * @return Auteur
+     */
+    public function addArticle(Article $article)
+    {
+    	$article->setAuteur($this);
+        $this->articles[] = $article;
+
+        return $this;
+    }
+
+    /**
+     * Remove articles
+     *
+     * @param Article $article
+     */
+    public function removeArticle(Article $article)
+    {
+        $this->articles->removeElement($article);
+    }
+
+    /**
+     * Get articles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getArticles()
+    {
+        return $this->articles;
     }
 }

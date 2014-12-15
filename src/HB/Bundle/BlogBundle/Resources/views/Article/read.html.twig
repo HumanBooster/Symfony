@@ -5,5 +5,7 @@ Auteur : {{ article.auteur.pseudo }}<br/>
 Titre : {{ article.titre }}<br/>
 Contenu : {{ article.contenu }}<br/>
 
+<pre>{{ dump(article) }}</pre>
+
 <a href="{{ path("article_list") }}">Retour à la liste des articles</a>
 </div>

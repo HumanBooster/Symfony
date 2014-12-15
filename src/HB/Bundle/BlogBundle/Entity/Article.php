@@ -31,7 +31,7 @@ class Article
     /**
      * @var Auteur
      *
-     * @ORM\ManyToOne(targetEntity="Auteur")
+     * @ORM\ManyToOne(targetEntity="Auteur", inversedBy="articles")
      */
     private $auteur;
 
