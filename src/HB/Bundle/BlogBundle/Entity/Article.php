@@ -29,9 +29,9 @@ class Article
     private $dateCreation;
 
     /**
-     * @var string
+     * @var Auteur
      *
-     * @ORM\Column(name="auteur", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Auteur")
      */
     private $auteur;
 
@@ -88,29 +88,6 @@ class Article
     }
 
     /**
-     * Set auteur
-     *
-     * @param string $auteur
-     * @return Article
-     */
-    public function setAuteur($auteur)
-    {
-        $this->auteur = $auteur;
-
-        return $this;
-    }
-
-    /**
-     * Get auteur
-     *
-     * @return string 
-     */
-    public function getAuteur()
-    {
-        return $this->auteur;
-    }
-
-    /**
      * Set titre
      *
      * @param string $titre
@@ -154,5 +131,28 @@ class Article
     public function getContenu()
     {
         return $this->contenu;
+    }
+
+    /**
+     * Set auteur
+     *
+     * @param Auteur $auteur
+     * @return Article
+     */
+    public function setAuteur(Auteur $auteur = null)
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * Get auteur
+     *
+     * @return \HB\Bundle\BlogBundle\Entity\Auteur 
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
     }
 }

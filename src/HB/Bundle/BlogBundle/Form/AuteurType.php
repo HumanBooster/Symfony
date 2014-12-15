@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ArticleType extends AbstractType
+class AuteurType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,13 +15,9 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('dateCreation', 'datetime')
-            ->add('auteur', 'entity', array(
-					  'class'        => 'HBBlogBundle:Auteur',
-					  'property'     => 'pseudo')
-            		)
-            ->add('titre', 'text')
-            ->add('contenu', 'textarea')
+            ->add('nom', 'text')
+            ->add('prenom', 'text')
+            ->add('pseudo', 'text')
         ;
     }
     
@@ -31,7 +27,7 @@ class ArticleType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'HB\Bundle\BlogBundle\Entity\Article'
+            'data_class' => 'HB\Bundle\BlogBundle\Entity\Auteur'
         ));
     }
 
@@ -40,6 +36,6 @@ class ArticleType extends AbstractType
      */
     public function getName()
     {
-        return 'hb_bundle_blogbundle_article';
+        return 'hb_bundle_blogbundle_auteur';
     }
 }
