@@ -1,0 +1,34 @@
+{# SB/BlogBundle/Ressources/views/Login/login.html.twig #}
+
+
+    {% if erreur %}
+        <div class="erreur">{{ erreur.message }}</div>
+    {% endif %}
+    
+    {% if app.user.pseudo is defined  %}
+        <div class="login_form">
+    	Bonjour {{ app.user.pseudo }}
+    	<a href="{{ path("logout") }}">Se déconnecter</a>
+    	</div>
+	{% else %}
+        <div class="login_form">
+            <h3>Formulaire d'identification</h3>
+            <form action="{{ path('login_check') }}" method="post">
+                <label>
+                    Login :
+                    <input type="text" name="_username" value="{{ dernier_pseudo }}" />
+                </label><br/>
+                <label>
+                    Password :
+                    <input type="password" name="_password" />
+                </label>
+                <br/>
+                <label>
+                    <input type="checkbox" name="_remember_me" checked />
+                    Se souvenir de moi
+                </label>
+                <br/>
+                <button type="submit">Connexion</button>
+            </form>
+        </div>
+    {%  endif %}

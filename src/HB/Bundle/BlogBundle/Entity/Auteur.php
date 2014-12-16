@@ -3,6 +3,7 @@
 namespace HB\Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Auteur
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="HB\Bundle\BlogBundle\Entity\AuteurRepository")
  */
-class Auteur
+class Auteur implements UserInterface
 {
     /**
      * @var integer
@@ -41,6 +42,14 @@ class Auteur
      * @ORM\Column(name="pseudo", type="string", length=255)
      */
     private $pseudo;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    private $password;
     
     /**
      * 
@@ -213,5 +222,26 @@ class Auteur
     public function getCommentaires()
     {
         return $this->commentaires;
+    }
+    
+    /* méthodes implémentées par l'interface UserInterface */
+    public function eraseCredentials() {
+    
+    }
+    
+    public function getPassword() {
+    	return $this->password;
+    }
+    
+    public function getRoles() {
+    	return array('ROLE_USER');
+    }
+    
+    public function getSalt() {
+    	return null;
+    }
+    
+    public function getUsername() {
+    	return $this->pseudo;
     }
 }

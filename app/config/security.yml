@@ -1,12 +1,22 @@
 security:
+    encoders:
+        HB\Bundle\BlogBundle\Entity\Auteur: plaintext
+
     providers:
-        in_memory:
-            memory: ~
+        ma_bdd:
+            entity:
+                class: HB\Bundle\BlogBundle\Entity\Auteur
+                property: pseudo
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        default:
+        mon_pare_feu:
+            pattern: ^/
             anonymous: ~
+            form_login: ~
+            logout:
+              path: /logout
+              invalidate_session: true
