@@ -1,11 +1,13 @@
 <h3>Liste des commentaires</h3>
 <div class="well">
-<ul>
+<section id="commentaires">
 {% for commentaire in commentaires %}
-	<li>{{ commentaire.id }} - {{ commentaire.titre }} - <a href="{{ path("commentaire_edit", {'id':commentaire.id}) }}">Editer</a> - <a href="{{ path("commentaire_delete", {'id':commentaire.id}) }}">Supprimer</a></li>
+	<div class="commentaire"><p class="titre"><strong>{{ commentaire.titre }}</strong></p>
+	<p class="date"><em>soumis par <a href="{{ path("auteur_read", {'id':commentaire.auteur.id}) }}">{{  commentaire.auteur.pseudo }}</a> le {{ commentaire.dateCreation|date('d/m/Y à H:m') }}</em></p>
+	<p class="liens"><a href="{{ path("commentaire_edit", {'id':commentaire.id}) }}">Editer</a> - <a href="{{ path("commentaire_delete", {'id':commentaire.id}) }}">Supprimer</a></p>
+	<p class="contenu">{{ commentaire.contenu|nl2br }}</p>
 {% else %}
-	<li>Pas d'commentaire trouvé</li>
+	<p>Pas de commentaire trouvé</p>
 {% endfor %}
-</ul>
-<a href="{{ path("commentaire_add") }}">Ajouter un commentaire</a>
+</section>
 </div>

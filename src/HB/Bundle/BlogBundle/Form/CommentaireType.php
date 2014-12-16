@@ -14,18 +14,18 @@ class CommentaireType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('dateCreation', 'datetime')
+        $builder // on commente les champs qui ne doivent pas s'afficher dans le formulaire
+            //->add('dateCreation', 'datetime')
             ->add('titre', 'text')
             ->add('contenu', 'textarea')
             ->add('auteur', 'entity', array(
 					  'class'        => 'HBBlogBundle:Auteur',
 					  'property'     => 'pseudo')
             		)
-            ->add('article', 'entity', array(
+            /*->add('article', 'entity', array(
 					  'class'        => 'HBBlogBundle:Article',
 					  'property'     => 'titre')
-            		)
+            		)*/
         ;
     }
     
