@@ -104,11 +104,13 @@ class CommentaireController extends Controller {
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($commentaire);
 				$em->flush();
+				
+				if ($originalRequest!=null)// on retourne un nouveau formulaire vide si on vient de article
+					return array('form'=> $this->createForm(new CommentaireType(), new Commentaire())->createView());
+				else
+					return $this->redirect($this->generateUrl("article_read", array('id' => $commentaire->getArticle()->getId())));
 			}
-			if ($originalRequest!=null)// on retourne un nouveau formulaire vide si on vient de article
-				return array('form'=> $this->createForm(new CommentaireType(), new Commentaire())->createView());
-			else
-				return $this->redirect($this->generateUrl("article_read", array('id' => $commentaire->getArticle()->getId())));
+			
 		}
 		
 		// On passe la méthode createView() du formulaire à la vue afin qu'elle puisse afficher
