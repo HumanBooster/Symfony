@@ -3,6 +3,7 @@
 namespace HB\Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Article
@@ -37,9 +38,10 @@ class Article
     private $auteur;
     
     /**
-     * @var Auteur
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="article")
+     * @JMS\Exclude()
      */
     private $commentaires;
 

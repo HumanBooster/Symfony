@@ -1,0 +1,7 @@
+{{ entity.titre }}<br />
+Commentaires:
+<ul>
+{% for commentaire in entity.commentaires %}
+<li>{{ commentaire.titre}}</li>
+{% endfor %}
+</ul>

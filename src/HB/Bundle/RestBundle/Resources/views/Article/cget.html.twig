@@ -1,0 +1,13 @@
+<ul>
+{% for article in entities %}
+<li>
+{{ article.titre }}<br />
+Users:
+<ul>
+{% for commentaire in article.commentaires %}
+<li>{{ commentaire.titre}}</li>
+{% endfor %}
+</ul>
+</li>
+{% endfor %}
+</ul>

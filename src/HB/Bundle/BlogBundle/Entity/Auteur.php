@@ -4,12 +4,14 @@ namespace HB\Bundle\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * Auteur
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="HB\Bundle\BlogBundle\Entity\AuteurRepository")
+ * 
  */
 class Auteur implements UserInterface
 {
@@ -56,6 +58,7 @@ class Auteur implements UserInterface
      * @var Collection
      * 
      * @ORM\OneToMany(targetEntity="Article", mappedBy="auteur", cascade="remove")
+     * @MaxDepth(1)
      */
     private $articles;
 
@@ -64,6 +67,7 @@ class Auteur implements UserInterface
      * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="auteur", cascade="remove")
+     * @MaxDepth(1)
      */
     private $commentaires;
 
