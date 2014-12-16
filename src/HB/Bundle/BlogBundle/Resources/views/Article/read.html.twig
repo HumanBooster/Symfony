@@ -10,7 +10,9 @@
 	
 	<pre>{{ dump(article) }}</pre>
 	
-	 {{ render(controller('HBBlogBundle:Commentaire:addToArticle', { 'article_id': article.id })) }}
+	 {{ render(controller("HBBlogBundle:Commentaire:addToArticle", { 'article_id': article.id, 'originalRequest': app.request })) }}
+	 
+	 {{  dump(app.request) }}
 	
 	{% include 'HBBlogBundle:Commentaire:list.html.twig' with { 'commentaires': article.commentaires } %}
 	

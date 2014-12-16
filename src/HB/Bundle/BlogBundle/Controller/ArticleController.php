@@ -102,29 +102,6 @@ class ArticleController extends Controller {
 	 * @Template()
 	 */
 	public function readAction(Article $article) {
-
-
-		// On regarde si on a un commentaire de soumis en POST
-		$request = $this->get('request');
-		if ($request->getMethod() == 'POST') {
-
-			$commentaire = new Commentaire();
-			$commentaire->setArticle($article);
-			$commentaire->setAuteur($this->getUser());
-			$form = $this->createForm(new CommentaireType(), $commentaire);
-			$form->bind($request);
-			// On vérifie que les valeurs entrées sont correctes
-			
-			if ($form->isValid()) {
-				// On l'enregistre notre objet $commentaire dans la base de données
-				$em = $this->getDoctrine()->getManager();
-				$em->persist($commentaire);
-				$em->flush();
-		
-				// On redirige vers la page de visualisation de l'article nouvellement créé
-				return $this->redirect($this->generateUrl('article_read', array('id' => $article->getId())));
-			}
-		}
 		
 		return array("article" => $article);
 	}

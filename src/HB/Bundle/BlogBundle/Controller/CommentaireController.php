@@ -52,10 +52,10 @@ class CommentaireController extends Controller {
 	 * @Template("HBBlogBundle:Commentaire:edit.html.twig")
 	 * @ParamConverter("article", class="HBBlogBundle:Article", options={"id" = "article_id"})
 	 */
-	public function addToArticleAction(Article $article) {
+	public function addToArticleAction(Article $article,  $originalRequest = null) {
 		$commentaire = new Commentaire();
 		$commentaire->setArticle($article);
-		return $this->addEditForm($commentaire);
+		return $this->addEditForm($commentaire,  $originalRequest);
 	}
 	
 	/**
@@ -74,12 +74,22 @@ class CommentaireController extends Controller {
 	 * @param Commentaire $commentaire
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|multitype:\Symfony\Component\Form\FormView
 	 */
-	private function addEditForm(Commentaire $commentaire) {
+	private function addEditForm(Commentaire $commentaire,  $originalRequest = null) {
 
+		// on force l'user courant
+		$commentaire->setAuteur($this->getUser());
+		
 		$form = $this->createForm(new CommentaireType(), $commentaire);
 		
 		// On récupère la requête
-		$request = $this->get('request');
+		if ($originalRequest!=null) {
+			$request = $originalRequest;
+		} else {
+			$request = $this->get('request');
+		}
+		// best dump ever
+		//\Doctrine\Common\Util\Debug::dump($originalRequest);
+		
 		
 		// On vérifie qu'elle est de type POST pour voir si un formulaire a été soumis
 		if ($request->getMethod() == 'POST') {
@@ -94,10 +104,11 @@ class CommentaireController extends Controller {
 				$em = $this->getDoctrine()->getManager();
 				$em->persist($commentaire);
 				$em->flush();
-		
-				// On redirige vers la page de visualisation de l'commentaire nouvellement créé
-				return $this->redirect($this->generateUrl('commentaire_read', array('id' => $commentaire->getId())));
 			}
+			if ($originalRequest!=null)// on retourne un nouveau formulaire vide si on vient de article
+				return array('form'=> $this->createForm(new CommentaireType(), new Commentaire())->createView());
+			else
+				return $this->redirect($this->generateUrl("article_read", array('id' => $commentaire->getArticle()->getId())));
 		}
 		
 		// On passe la méthode createView() du formulaire à la vue afin qu'elle puisse afficher
