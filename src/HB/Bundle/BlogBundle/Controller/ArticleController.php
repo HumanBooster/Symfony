@@ -7,6 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use HB\Bundle\BlogBundle\Entity\Article;
 use HB\Bundle\BlogBundle\Form\ArticleType;
+use HB\Bundle\BlogBundle\Entity\Commentaire;
+use HB\Bundle\BlogBundle\Form\CommentaireType;
 
 /**
  * ArticleController
@@ -97,13 +99,28 @@ class ArticleController extends Controller {
 	 * @Template()
 	 */
 	public function readAction(Article $article) {
-		/*$article = $this->getDoctrine ()
-		->getRepository ( 'HBBlogBundle:Article' )
-		->find ( $id );
+
+
+		// On regarde si on a un commentaire de soumis en POST
+		$request = $this->get('request');
+		if ($request->getMethod() == 'POST') {
+
+			$commentaire = new Commentaire();
+			$commentaire->setArticle($article);
+			$form = $this->createForm(new CommentaireType(), $commentaire);
+			$form->bind($request);
+			// On vérifie que les valeurs entrées sont correctes
+			
+			if ($form->isValid()) {
+				// On l'enregistre notre objet $commentaire dans la base de données
+				$em = $this->getDoctrine()->getManager();
+				$em->persist($commentaire);
+				$em->flush();
 		
-		if (! $article) {
-			throw $this->createNotFoundException ( 'Aucun article trouvé pour cet id : ' . $id );
-		}*/
+				// On redirige vers la page de visualisation de l'article nouvellement créé
+				return $this->redirect($this->generateUrl('article_read', array('id' => $article->getId())));
+			}
+		}
 		
 		return array("article" => $article);
 	}

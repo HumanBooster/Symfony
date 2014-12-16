@@ -1,0 +1,11 @@
+<h3>Consulter le commentaire</h3>
+<div class="well">
+Id : {{ commentaire.id }}<br/>
+Auteur : {{ commentaire.auteur.pseudo }}<br/>
+Titre : {{ commentaire.titre }}<br/>
+Contenu : {{ commentaire.contenu }}<br/>
+
+<pre>{{ dump(commentaire) }}</pre>
+
+<a href="{{ path("commentaire_list") }}">Retour à la liste des commentaires</a>
+</div>

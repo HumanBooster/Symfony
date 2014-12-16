@@ -7,5 +7,9 @@ Contenu : {{ article.contenu }}<br/>
 
 <pre>{{ dump(article) }}</pre>
 
+ {{ render(controller('HBBlogBundle:Commentaire:addToArticle', { 'article_id': article.id })) }}
+
+{% include 'HBBlogBundle:Commentaire:list.html.twig' with { 'commentaires': article.commentaires } %}
+
 <a href="{{ path("article_list") }}">Retour à la liste des articles</a>
 </div>

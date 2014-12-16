@@ -5,12 +5,12 @@ namespace HB\Bundle\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Article
+ * Commentaire
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="HB\Bundle\BlogBundle\Entity\ArticleRepository")
+ * @ORM\Entity(repositoryClass="HB\Bundle\BlogBundle\Entity\CommentaireRepository")
  */
-class Article
+class Commentaire
 {
     /**
      * @var integer
@@ -29,21 +29,6 @@ class Article
     private $dateCreation;
 
     /**
-     * @var Auteur
-     *
-     * @ORM\ManyToOne(targetEntity="Auteur", inversedBy="articles")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $auteur;
-    
-    /**
-     * @var Auteur
-     *
-     * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="article")
-     */
-    private $commentaires;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="titre", type="string", length=255)
@@ -56,17 +41,33 @@ class Article
      * @ORM\Column(name="contenu", type="text")
      */
     private $contenu;
+    
 
+    /**
+     * @var Auteur
+     *
+     * @ORM\ManyToOne(targetEntity="Auteur", inversedBy="commentaires")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $auteur;
+    
+
+    /**
+     * @var Article
+     *
+     * @ORM\ManyToOne(targetEntity="Article", inversedBy="commentaires")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $article;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-    	$this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
     	$this->dateCreation = new \DateTime();
     }
-    
+
     /**
      * Get id
      *
@@ -81,7 +82,7 @@ class Article
      * Set dateCreation
      *
      * @param \DateTime $dateCreation
-     * @return Article
+     * @return Commentaire
      */
     public function setDateCreation($dateCreation)
     {
@@ -99,12 +100,12 @@ class Article
     {
         return $this->dateCreation;
     }
-
+    
     /**
      * Set titre
      *
      * @param string $titre
-     * @return Article
+     * @return Commentaire
      */
     public function setTitre($titre)
     {
@@ -127,7 +128,7 @@ class Article
      * Set contenu
      *
      * @param string $contenu
-     * @return Article
+     * @return Commentaire
      */
     public function setContenu($contenu)
     {
@@ -150,7 +151,7 @@ class Article
      * Set auteur
      *
      * @param Auteur $auteur
-     * @return Article
+     * @return Commentaire
      */
     public function setAuteur(Auteur $auteur)
     {
@@ -162,7 +163,7 @@ class Article
     /**
      * Get auteur
      *
-     * @return \HB\Bundle\BlogBundle\Entity\Auteur 
+     * @return Auteur 
      */
     public function getAuteur()
     {
@@ -170,38 +171,25 @@ class Article
     }
 
     /**
-     * Add commentaire
+     * Set article
      *
-     * @param Commentaire $commentaire
-     * @return Article
+     * @param Article $article
+     * @return Commentaire
      */
-    public function addCommentaire(Commentaire $commentaire)
+    public function setArticle(Article $article)
     {
-    	$commentaire->setArticle($this);
-        $this->commentaires[] = $commentaire;
+        $this->article = $article;
 
         return $this;
     }
 
     /**
-     * Remove commentaire
+     * Get article
      *
-     * @param Commentaire $commentaires
+     * @return Article 
      */
-    public function removeCommentaire(Commentaire $commentaire)
+    public function getArticle()
     {
-        $this->commentaires->removeElement($commentaire);
+        return $this->article;
     }
-
-    /**
-     * Get commentaires
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getCommentaires()
-    {
-        return $this->commentaires;
-    }
-
-
 }

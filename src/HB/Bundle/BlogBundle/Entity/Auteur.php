@@ -46,11 +46,26 @@ class Auteur
      * 
      * @var Collection
      * 
-     * @ORM\OneToMany(targetEntity="Article", mappedBy="auteur")
+     * @ORM\OneToMany(targetEntity="Article", mappedBy="auteur", cascade="remove")
      */
     private $articles;
 
+    /**
+     *
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="auteur", cascade="remove")
+     */
+    private $commentaires;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+    	$this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -129,16 +144,11 @@ class Auteur
     {
         return $this->pseudo;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    
+
 
     /**
-     * Add articles
+     * Add article
      *
      * @param Article $article
      * @return Auteur
@@ -152,7 +162,7 @@ class Auteur
     }
 
     /**
-     * Remove articles
+     * Remove article
      *
      * @param Article $article
      */
@@ -169,5 +179,39 @@ class Auteur
     public function getArticles()
     {
         return $this->articles;
+    }
+
+    /**
+     * Add commentaire
+     *
+     * @param Commentaire $commentaire
+     * @return Auteur
+     */
+    public function addCommentaire(Commentaire $commentaire)
+    {
+    	$commentaire->setAuteur($this);
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param Commentaire $commentaire
+     */
+    public function removeCommentaire(Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
     }
 }
