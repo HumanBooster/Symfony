@@ -61,6 +61,9 @@ class ArticleController extends Controller {
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|multitype:\Symfony\Component\Form\FormView
 	 */
 	private function addEditForm(Article $article) {
+		
+		// on force l'auteur sur l'utilisateur enregistré
+		$article->setAuteur($this->getUser());
 
 		$form = $this->createForm(new ArticleType(), $article);
 		
@@ -107,6 +110,7 @@ class ArticleController extends Controller {
 
 			$commentaire = new Commentaire();
 			$commentaire->setArticle($article);
+			$commentaire->setAuteur($this->getUser());
 			$form = $this->createForm(new CommentaireType(), $commentaire);
 			$form->bind($request);
 			// On vérifie que les valeurs entrées sont correctes

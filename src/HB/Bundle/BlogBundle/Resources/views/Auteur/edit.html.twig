@@ -1,7 +1,11 @@
-<h3>Formulaire d'ajout/édition d'auteur</h3>
-<div class="well">
-  <form method="post">
-    {{ form_widget(form) }}
-    <input type="submit" class="btn btn-primary" />
-  </form>
-</div>
+{%  extends "::base.html.twig" %}
+
+{%  block body %}
+	<h3>Formulaire d'ajout/édition d'auteur</h3>
+	<div class="well">
+	  <form method="post">
+	    {{ form_widget(form) }}
+	    <input type="submit" class="btn btn-primary" />
+	  </form>
+	</div>
+{%  endblock %}

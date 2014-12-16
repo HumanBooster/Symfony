@@ -244,4 +244,10 @@ class Auteur implements UserInterface
     public function getUsername() {
     	return $this->pseudo;
     }
+    
+    public function setPassword($password) {
+    	$this->password = $password;
+    	
+    	return $this;
+    }
 }

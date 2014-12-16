@@ -18,10 +18,10 @@ class CommentaireType extends AbstractType
             //->add('dateCreation', 'datetime')
             ->add('titre', 'text')
             ->add('contenu', 'textarea')
-            ->add('auteur', 'entity', array(
+            /*->add('auteur', 'entity', array(
 					  'class'        => 'HBBlogBundle:Auteur',
 					  'property'     => 'pseudo')
-            		)
+            		)*/
             /*->add('article', 'entity', array(
 					  'class'        => 'HBBlogBundle:Article',
 					  'property'     => 'titre')
