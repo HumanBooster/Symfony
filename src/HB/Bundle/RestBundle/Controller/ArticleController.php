@@ -106,7 +106,7 @@ class ArticleController extends FOSRestController implements ClassResourceInterf
 	public function putAction(Request $request, $id)
 	{
 		$article = $this->getEntity($id);
-		$form = $this->createForm(new RestArticleType(), $article);
+		$form = $this->createForm(new ArticleRestType(), $article);
 		$form->bind($request);
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
